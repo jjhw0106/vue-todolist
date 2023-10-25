@@ -3,7 +3,7 @@
   <todo-header></todo-header>
   <!-- 하위 컴포넌트에서 발생시킨 이벤트 이름="현재컴포넌트의 메서드 명" -->
   <todo-input v-on:addTodoItem="addOneItem"></todo-input>
-  <todo-list v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></todo-list>
+  <todo-list v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleComplete="toggleItemStatus"></todo-list>
   <todo-footer></todo-footer>
 </div>
 </template>
@@ -32,6 +32,16 @@ export default {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);  // localStorage에서만 지워지고 화면에 보여주는 todoItems[]에서는 안 지워졌기 때문에 별도로 지워주어야 한다.
     },
+
+    toggleItemStatus: function(todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    }
+
+    clearAllItems: function(todoItem) {
+      localStorage.clear();
+    }
   },
   created: function() {
     if(localStorage.length > 0) {
