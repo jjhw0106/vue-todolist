@@ -8,8 +8,9 @@
 export default {
   methods:{
     clearTodo: function() {
-      console.log('Cleaer!')
-      localStorage.clear();
+      this.$emit('clearTodo');
+      // console.log('Cleaer!')
+      // localStorage.clear();
     }
   }
 }

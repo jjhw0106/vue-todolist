@@ -1,30 +1,48 @@
 <template>
   <div class="inputBox shadow">
     <input type="text" v-model="inputValue" v-on:keyup.enter="addTodo">
-    <!-- <button v-on:click="addTodo">add</button> -->
     <span class="addContainer" v-on:click="addTodo">
       <i class="fa-solid fa-plus" ></i>
     </span>
+    
+    <Modal v-if="showModal" @close="showModal = false">
+      <template v-slot:header>
+        <h3>경고!! <i class="fa-regular fa-circle-xmark modalCloseBtn" @click="showModal = false"></i> </h3>
+        
+      </template>
+      <template v-slot:body>
+        입력창이 비어있습니다.
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/AlertModal.vue';
+
 export default {
   data: function() {
     return {
-      inputValue: ''
+      inputValue: '',
+      showModal: false,
     }
   },
   methods: {
     addTodo: function() {
-      if(this.inputValue!=='') {
+      if (this.inputValue!=='') {
         this.$emit('addTodoItem',this.inputValue)
+        this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
       }
-      this.clearInput();
+
     },
     clearInput: function() {
       this.inputValue = '';
     }
+  },
+  components: {
+    Modal: Modal
   }
 }
 </script>
@@ -53,5 +71,8 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+.modalCloseBtn {
+  color: #42b983;
 }
 </style>
