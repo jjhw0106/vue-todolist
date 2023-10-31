@@ -21,39 +21,41 @@ export default {
     }
   },
   methods: {
-    addOneItem: function(todoItem) {
-      var obj = {completed: false, item: todoItem}
+    addOneItem(todoItem) {
+      const obj = {completed: false, item: todoItem}
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
     
-    removeOneItem: function(todoItem, index) {
+    removeOneItem(todoItem, index) {
       console.log(todoItem.item, index);
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);  // localStorage에서만 지워지고 화면에 보여주는 todoItems[]에서는 안 지워졌기 때문에 별도로 지워주어야 한다.
     },
 
-    toggleItemStatus: function(todoItem, index) {
+    toggleItemStatus(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
       this.todoItems[index].completed = !this.todoItems[index].completed;
     },
 
-    clearAllItems: function() {
+    clearAllItems() {
       localStorage.clear();
       this.todoItems = [];
     },
   },
-  created: function() {
+  created() {
     if(localStorage.length > 0) {
-      for (var i =0; i<localStorage.length; i++) {
-        var selectedItem=JSON.parse(localStorage.getItem(localStorage.key(i)));
+      for (let i =0; i<localStorage.length; i++) {
+        let selectedItem=JSON.parse(localStorage.getItem(localStorage.key(i)));
         this.todoItems.push(selectedItem);
       }
     }
-    console.log(this.todoItems);
+    console.log(this.todoItems);  
   },
-  components: { 
+  components: {
+    // TodoHeader: TodoHeader 
+    // ES6 적용 =>
     TodoHeader, 
     TodoInput, 
     TodoList, 
