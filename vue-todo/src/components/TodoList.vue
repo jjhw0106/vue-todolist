@@ -2,30 +2,46 @@
   <div>
     <!-- <ul> -->
     <transition-group name='list' tag='ul'>
-      <li v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem" class="shadow">
+      <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem" class="shadow">
         <span v-on:click="toggleComplete(todoItem, index)"><i class="fa-solid fa-check checkBtn"></i></span>
         <span v-bind:class="{textCompleted: todoItem.completed}"> {{ todoItem.item }} </span>
         <!-- <span class="removeBtn" v-on:click="removeTodo(todoItem, index)"><i class="fa-solid fa-trash"></i></span> -->
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)"><i class="fa-solid fa-trash"></i></span>
+        <span class="removeBtn" v-on:click="removeItem(todoItem, index)"><i class="fa-solid fa-trash"></i></span>
       </li>
     </transition-group>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 export default {
   methods: 
   {
-    removeTodo(todoItem, index) {
-      const target = { todoItem, index };
-      this.$store.commit('removeItem', target)
-    },
+    // ...mapState(['removeItem']),
+    // removeTodo(todoItem, index) {
+    //   const target = { todoItem, index };
+    //   this.$store.commit('removeItem', target)
+    // },
     toggleComplete(todoItem, index) {
       this.$emit('toggleComplete', todoItem, index);
       const target = { todoItem, index }
       this.$store.commit('toggleComplete', target)
     }
   },
+  // actions: {
+  //   },
+  computed:{
+    ...mapState(['removeItem']),
+    // todoItems() {
+    //   return this.$store.getters.storedTodoItems;
+    // }
+    /* 배열리터럴 */
+    ...mapGetters(['storedTodoItems'])
+    
+    /* 객체리터럴 */ 
+    // getters에서 갖고 있는 이름과 component 파일에서 갖는 이름이 다를 경우 사용
+    // ...mapGetters({'storedTodoItems'})
+  }
 }
 </script>
 

@@ -20,6 +20,11 @@ export const store = createStore({
     headerMsg: 'Do It!',
     todoItems: storage.fetch(),
   },
+  getters: {
+    storedTodoItems(state) {
+      return state.todoItems;
+    }
+  },
   mutations: {
     changeHeadMsg(state, payload) {
       state.headerMsg = payload.newMsg;
@@ -30,6 +35,7 @@ export const store = createStore({
       state.todoItems.push(addedItem);
     },
     removeItem(state, payload) {
+      console.log("remove!!!");
       localStorage.removeItem(payload.todoItem.item);
       state.todoItems.splice(payload.index, 1);  // localStorage에서만 지워지고 화면에 보여주는 todoItems[]에서는 안 지워졌기 때문에 별도로 지워주어야 한다.
     },
@@ -42,5 +48,5 @@ export const store = createStore({
       localStorage.clear();
       state.todoItems = [];      
     }
-  }
+  },
 })
