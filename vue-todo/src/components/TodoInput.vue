@@ -30,12 +30,11 @@ export default {
   methods: {
     addTodo() {
       if (this.inputValue!=='') {
-        this.$emit('addTodoItem',this.inputValue)
+        this.$store.commit('addItem', {newOne: this.inputValue});
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
-
     },
     clearInput() {
       this.inputValue = '';

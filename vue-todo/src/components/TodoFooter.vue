@@ -9,6 +9,7 @@ export default {
   methods:{
     clearTodo() {
       this.$emit('clearTodo');
+      this.$store.commit('clearTodos')
       // console.log('Cleaer!')
       // localStorage.clear();
     }

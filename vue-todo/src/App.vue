@@ -2,9 +2,9 @@
 <div id="app">
   <todo-header></todo-header>
   <!-- 하위 컴포넌트에서 발생시킨 이벤트 이름="현재컴포넌트의 메서드 명" -->
-  <todo-input v-on:addTodoItem="addOneItem"></todo-input>
-  <todo-list v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleComplete="toggleItemStatus"></todo-list>
-  <todo-footer v-on:clearTodo="clearAllItems"></todo-footer>
+  <todo-input></todo-input>
+  <todo-list></todo-list>
+  <todo-footer></todo-footer>
 </div>
 </template>
 
@@ -15,33 +15,31 @@ import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 
 export default {
-  data: function() {
-    return {
-      todoItems: []
-    }
-  },
+  // data: function() {
+  //   return {
+  //     todoItems: []
+  //   }
+  // },
+  /* 
+  
+  아래의 methods는 App.vue가 아닌 각각의 컴포넌트의 methods에 구현하자
   methods: {
     addOneItem(todoItem) {
       const obj = {completed: false, item: todoItem}
-      localStorage.setItem(todoItem, JSON.stringify(obj));
-      this.todoItems.push(obj);
+      this.$store.commit('addOneItem', {newOne: obj});
     },
     
     removeOneItem(todoItem, index) {
-      console.log(todoItem.item, index);
-      localStorage.removeItem(todoItem.item);
-      this.todoItems.splice(index, 1);  // localStorage에서만 지워지고 화면에 보여주는 todoItems[]에서는 안 지워졌기 때문에 별도로 지워주어야 한다.
+      this.$store.commit('removeOneItem', {todoItem: todoItem, index: index})
     },
 
     toggleItemStatus(todoItem, index) {
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-      this.todoItems[index].completed = !this.todoItems[index].completed;
+      this.$store.commit('toggleItemStatus', {todoItem: todoItem, index: index})
     },
 
     clearAllItems() {
-      localStorage.clear();
-      this.todoItems = [];
+      this.$store.commit('clearAllItems');
+      
     },
   },
   created() {
@@ -52,7 +50,9 @@ export default {
       }
     }
     console.log(this.todoItems);  
-  },
+  }, 
+  
+  */
   components: {
     // TodoHeader: TodoHeader 
     // ES6 적용 =>

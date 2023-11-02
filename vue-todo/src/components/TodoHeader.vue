@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>'as'</h1>
+    <h1>{{ this.$store.state.headerMsg }}</h1>
   </header>
 </template>
 
