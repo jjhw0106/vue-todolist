@@ -3,35 +3,40 @@
     <!-- <ul> -->
     <transition-group name='list' tag='ul'>
       <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem" class="shadow">
-        <span v-on:click="toggleComplete(todoItem, index)"><i class="fa-solid fa-check checkBtn"></i></span>
+        <span v-on:click="toggleComplete({todoItem, index})"><i class="fa-solid fa-check checkBtn"></i></span>
         <span v-bind:class="{textCompleted: todoItem.completed}"> {{ todoItem.item }} </span>
         <!-- <span class="removeBtn" v-on:click="removeTodo(todoItem, index)"><i class="fa-solid fa-trash"></i></span> -->
-        <span class="removeBtn" v-on:click="removeItem(todoItem, index)"><i class="fa-solid fa-trash"></i></span>
+        <span class="removeBtn" v-on:click="removeItem({todoItem, index})"><i class="fa-solid fa-trash"></i></span>
       </li>
     </transition-group>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   methods: 
   {
-    // ...mapState(['removeItem']),
+    /* 인자를 안붙여 줘도 템플릿에서 넘기고 있으면 store에서 인자를 받을 수 있다. */
+    ...mapMutations([
+      'removeItem',
+      'toggleComplete'
+    ]),
+
+    /* helper함수로 리팩토링 하기 전 코드 */
     // removeTodo(todoItem, index) {
     //   const target = { todoItem, index };
     //   this.$store.commit('removeItem', target)
     // },
-    toggleComplete(todoItem, index) {
-      this.$emit('toggleComplete', todoItem, index);
-      const target = { todoItem, index }
-      this.$store.commit('toggleComplete', target)
-    }
+    // toggleComplete(todoItem, index) {
+    //   // this.$emit('toggleComplete', todoItem, index);
+    //   // const target = { todoItem, index }
+    //   // this.$store.commit('toggleComplete', target)
+    // }
   },
-  // actions: {
-  //   },
+  actions: {
+  },
   computed:{
-    ...mapState(['removeItem']),
     // todoItems() {
     //   return this.$store.getters.storedTodoItems;
     // }

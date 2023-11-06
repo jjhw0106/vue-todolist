@@ -1,7 +1,7 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="inputValue" v-on:keyup.enter="addTodo">
-    <span class="addContainer" v-on:click="addTodo">
+    <input type="text" v-model="inputValue" v-on:keyup.enter="checkAndAddTodo()">
+    <span class="addContainer" v-on:click="checkAndAddTodo()">
       <i class="fa-solid fa-plus" ></i>
     </span>
     
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import Modal from './common/AlertModal.vue';
 
 export default {
@@ -28,13 +29,24 @@ export default {
     }
   },
   methods: {
-    addTodo() {
-      if (this.inputValue!=='') {
-        this.$store.commit('addItem', {newOne: this.inputValue});
+    ...mapMutations([
+      'addTodo'
+    ]),
+
+    checkAndAddTodo() {
+      if (!this.checkEmpty()) {
+        this.addTodo(this.inputValue);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
+    },
+    checkEmpty() {
+      console.log("inputValue: ", this.inputValue)
+      if(this.inputValue === '') {
+        return true;
+      }
+      return false;
     },
     clearInput() {
       this.inputValue = '';

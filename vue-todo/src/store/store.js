@@ -9,7 +9,6 @@ const storage = {
         arr.push(selectedItem);
       }
     }
-    console.log(this.todoItems);  
     return arr;
   },
 }
@@ -29,13 +28,15 @@ export const store = createStore({
     changeHeadMsg(state, payload) {
       state.headerMsg = payload.newMsg;
     },
-    addItem(state, payload) {
-      const addedItem = {completed: false, item: payload.newOne};
+    addTodo(state, payload) {
+      console.log("Add!",payload);
+      const addedItem = {completed: false, item: payload};
       localStorage.setItem(addedItem.item, JSON.stringify(addedItem));
       state.todoItems.push(addedItem);
+      payload='';
     },
     removeItem(state, payload) {
-      console.log("remove!!!");
+      console.log(payload);
       localStorage.removeItem(payload.todoItem.item);
       state.todoItems.splice(payload.index, 1);  // localStorage에서만 지워지고 화면에 보여주는 todoItems[]에서는 안 지워졌기 때문에 별도로 지워주어야 한다.
     },
