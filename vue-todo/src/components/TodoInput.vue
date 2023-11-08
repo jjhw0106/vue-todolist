@@ -32,7 +32,6 @@ export default {
     ...mapMutations([
       'addTodo'
     ]),
-
     checkAndAddTodo() {
       if (!this.checkEmpty()) {
         this.addTodo(this.inputValue);

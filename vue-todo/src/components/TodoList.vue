@@ -25,23 +25,24 @@ export default {
 
     /* helper함수로 리팩토링 하기 전 코드 */
     // removeTodo(todoItem, index) {
-    //   const target = { todoItem, index };
+      //   const target = { todoItem, index };
     //   this.$store.commit('removeItem', target)
     // },
     // toggleComplete(todoItem, index) {
-    //   // this.$emit('toggleComplete', todoItem, index);
+      //   // this.$emit('toggleComplete', todoItem, index);
     //   // const target = { todoItem, index }
     //   // this.$store.commit('toggleComplete', target)
     // }
   },
   actions: {
-  },
+    },
   computed:{
+    ...mapGetters(['storedTodoItems'])
     // todoItems() {
     //   return this.$store.getters.storedTodoItems;
     // }
     /* 배열리터럴 */
-    ...mapGetters(['storedTodoItems'])
+    // ...mapGetters(['storedTodoItems'])
     
     /* 객체리터럴 */ 
     // getters에서 갖고 있는 이름과 component 파일에서 갖는 이름이 다를 경우 사용

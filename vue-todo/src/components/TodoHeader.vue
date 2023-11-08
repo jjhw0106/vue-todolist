@@ -1,12 +1,16 @@
 <template>
   <header>
-    <h1>{{ this.$store.state.headerMsg }}</h1>
+    <h1>{{ getHeadMsg }}</h1>
   </header>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  
+  computed: {
+    ...mapMutations(['changeHeadMsg']),
+    ...mapGetters(['getHeadMsg']),
+  }
 }
 </script>
 
